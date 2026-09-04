@@ -3,7 +3,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'SAVE_QUESTION') {
     const { data, token } = message;
 
-    fetch('http://localhost:3001/api/questions', {
+    fetch('https://sp-02.onrender.com/api/questions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

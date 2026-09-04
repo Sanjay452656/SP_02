@@ -35,8 +35,13 @@ app.use('/api/questions', questionRoutes);
 app.use('/api/revisions', revisionRoutes);
 app.use('/api/stats', statsRoutes);
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok' });
+// Health check routes for UptimeRobot
+app.get(['/', '/health', '/api/health'], (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    service: 'leetcode-tracker-api',
+    timestamp: new Date().toISOString()
+  });
 });
 
 app.listen(port, () => {

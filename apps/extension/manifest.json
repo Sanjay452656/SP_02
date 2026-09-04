@@ -12,8 +12,8 @@
   },
   "host_permissions": [
     "https://leetcode.com/*",
-    "http://localhost/*",
-    "http://127.0.0.1/*"
+    "https://sp-02.onrender.com/*",
+    "http://localhost/*"
   ],
   "action": {
     "default_popup": "popup.html",
