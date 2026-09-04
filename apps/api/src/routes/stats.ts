@@ -114,7 +114,7 @@ router.get('/dashboard', authenticateToken, async (req: AuthRequest, res: Respon
     res.json({
       totalSolved, needRevisionToday, retentionRate, strongQuestions, weakQuestions, streak,
       heatmap, topicBreakdown, difficultyBreakdown: difficultyMap,
-      upcoming: upcoming.map(u => ({
+      upcoming: upcoming.map((u: any) => ({
         id: u.id,
         scheduledDate: u.scheduledDate,
         revisionNumber: u.revisionNumber,
@@ -122,7 +122,7 @@ router.get('/dashboard', authenticateToken, async (req: AuthRequest, res: Respon
         difficulty: u.userQuestion.question.difficulty,
         problemLink: u.userQuestion.question.problemLink,
       })),
-      recentActivity: recentActivity.map(uq => ({
+      recentActivity: recentActivity.map((uq: any) => ({
         id: uq.id,
         title: uq.question.title,
         difficulty: uq.question.difficulty,
