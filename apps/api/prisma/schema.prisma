@@ -1,0 +1,61 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  email         String         @unique
+  passwordHash  String
+  questions     UserQuestion[]
+  createdAt     DateTime       @default(now())
+}
+
+model Question {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  platform      String         @default("LeetCode")
+  problemLink   String
+  difficulty    String         // Easy, Medium, Hard
+  topic         String         // e.g., Arrays, Strings, Graph
+  createdAt     DateTime       @default(now())
+  
+  // Relations
+  userQuestions UserQuestion[]
+}
+
+model UserQuestion {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String         @db.ObjectId
+  questionId      String         @db.ObjectId
+  notes           String?
+  solutionLink    String?
+  pattern         String?        // Sliding Window, DP, etc.
+  mistakes        String?        // Edge Case, Logic Error, etc.
+  confidenceLevel Int            // 1 to 5
+  timeTaken       Int?           // in minutes
+  solvedDate      DateTime       @default(now())
+  
+  // Relations
+  user            User           @relation(fields: [userId], references: [id])
+  question        Question       @relation(fields: [questionId], references: [id])
+  revisions       Revision[]
+
+  @@unique([userId, questionId])
+}
+
+model Revision {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  userQuestionId  String         @db.ObjectId
+  revisionNumber  Int
+  scheduledDate   DateTime
+  completed       Boolean        @default(false)
+  completedAt     DateTime?
+  
+  // Relations
+  userQuestion    UserQuestion   @relation(fields: [userQuestionId], references: [id])
+}

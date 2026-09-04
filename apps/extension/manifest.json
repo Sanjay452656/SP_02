@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "LeetCode Spaced Repetition Tracker",
+  "version": "1.0.0",
+  "description": "Automatically track solved LeetCode problems for spaced repetition.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "https://leetcode.com/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Tracker Settings"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://leetcode.com/problems/*"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ]
+}
